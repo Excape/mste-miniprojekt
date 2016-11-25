@@ -6,8 +6,9 @@ namespace AutoReservation.Dal.Entities
 {
     public class Reservation
     {
-        // ID ist nicht in Vorgabe
-        public int Id { get; set; }
+        [Key]
+        [Column("Id")]
+        public int ReservationsNr { get; set; }
         [Required]
         public DateTime Von { get; set; }
         [Required]
@@ -16,12 +17,12 @@ namespace AutoReservation.Dal.Entities
         public int AutoId { get; set; }
         [Required]
         public int KundeId { get; set; }
-        [Required]
-        public int ReservationsNr { get; set; }
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public virtual Auto Auto { get; set; }
-        public virtual Kunde Kunde { get; set; }
+        [ForeignKey("AutoId"), InverseProperty("Reservationen")]
+        public Auto Auto { get; set; }
+        [ForeignKey("KundeId"), InverseProperty("Reservationen")]
+        public Kunde Kunde { get; set; }
     }
 }

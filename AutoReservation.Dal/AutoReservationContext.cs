@@ -1,6 +1,7 @@
 ﻿using AutoReservation.Dal.Entities;
 using AutoReservation.Dal.Migrations;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace AutoReservation.Dal
 {
@@ -41,11 +42,14 @@ namespace AutoReservation.Dal
         {
             base.OnModelCreating(modelBuilder);
 
-            // Set up hierarchical mapping in fluent API
-            //      Remarks:
-            //      This could not be done using attributes on business entities
-            //      since the discriminator (AutoKlasse) must not be part of the entity.
-            
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            //Discriminator mapping for Auto
+            modelBuilder.Entity<Auto>()
+                .Map<StandardAuto>(a => a.Requires("AutoKlasse").HasValue(2))
+                .Map<MittelklasseAuto>(a => a.Requires("AutoKlasse").HasValue(1))
+                .Map<LuxusklasseAuto>(a => a.Requires("AutoKlasse").HasValue(0))
+                .ToTable("Auto");
         }
     }
 }

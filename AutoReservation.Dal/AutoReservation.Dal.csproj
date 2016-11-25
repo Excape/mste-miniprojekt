@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201611240802079_InitialCreate.Designer.cs">
       <DependentUpon>201611240802079_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611250959356_InheritanceMapping.cs" />
+    <Compile Include="Migrations\201611250959356_InheritanceMapping.Designer.cs">
+      <DependentUpon>201611250959356_InheritanceMapping.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Reservation.cs" />
@@ -101,6 +105,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611240802079_InitialCreate.resx">
       <DependentUpon>201611240802079_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611250959356_InheritanceMapping.resx">
+      <DependentUpon>201611250959356_InheritanceMapping.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
