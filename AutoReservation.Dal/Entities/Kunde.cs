@@ -19,6 +19,6 @@ namespace AutoReservation.Dal.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public List<Reservation> Reservationen { get; set; }
+        public virtual ICollection<Reservation> Reservationen { get; set; }
     }
 }

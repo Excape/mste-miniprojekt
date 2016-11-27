@@ -48,14 +48,18 @@ namespace AutoReservation.BusinessLayer
         {
             using (var db = new AutoReservationContext())
             {
-                return db.Autos.SingleOrDefault(auto => auto.Id == index);
+                return db.Autos
+                    .Include(auto => auto.Reservationen)
+                    .SingleOrDefault(auto => auto.Id == index);
             }
         }
         public Kunde loadKunde(int index)
         {
             using (var db = new AutoReservationContext())
             {
-                return db.Kunden.SingleOrDefault(kunde => kunde.Id == index);
+                return db.Kunden
+                    .Include(kunde => kunde.Reservationen)
+                    .SingleOrDefault(kunde => kunde.Id == index);
             }
         }
 
@@ -63,7 +67,10 @@ namespace AutoReservation.BusinessLayer
         {
             using (var db = new AutoReservationContext())
             {
-                return db.Reservationen.SingleOrDefault(reservation => reservation.ReservationsNr == index);
+                return db.Reservationen
+                    .Include(reservation => reservation.Kunde)
+                    .Include(reservation => reservation.Auto)
+                    .SingleOrDefault(reservation => reservation.ReservationsNr == index);
             }
         }
 
