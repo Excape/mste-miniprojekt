@@ -109,8 +109,11 @@ namespace AutoReservation.BusinessLayer.Testing
             var res2 = Target.loadReservation(1);
             Assert.AreNotEqual(res1, res2);
 
-            res1.Kunde = Target.loadKunde(1);
-            res2.Kunde = Target.loadKunde(2);
+            // TODO: Ask, why both must be updated!?
+            res1.Kunde = Target.loadKunde(2);
+            res1.KundeId = 2;
+            res2.Kunde = Target.loadKunde(3);
+            res2.KundeId = 3;
 
             Target.updateReservation(res1);
 
@@ -124,7 +127,7 @@ namespace AutoReservation.BusinessLayer.Testing
                 // Everything OK
             }
 
-            Assert.AreEqual(1, Target.loadReservation(1).Kunde.Id);
+            Assert.AreEqual(2, Target.loadReservation(1).Kunde.Id);
         }
 
     }
