@@ -1,4 +1,5 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.FaultExceptions;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.TestEnvironment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -187,25 +188,28 @@ namespace AutoReservation.Service.Wcf.Testing
         #region Update with optimistic concurrency violation
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateAutoWithOptimisticConcurrencyTest()
         {
-            //AutoDto tempAutoDto = Target.GetAutoById(1);
-            //AutoDto tempAutoDtoTwo = Target.GetAutoById(1);
-            //tempAutoDto.Marke = "Mini";
-            //Target.UpdateAuto(tempAutoDto);
-            //tempAutoDtoTwo.Marke = "Ferrari";
-            //Target.UpdateAuto(tempAutoDtoTwo);
-            //Assert.Inconclusive("Test not implemented.");
+            AutoDto tempAutoDto = Target.GetAutoById(1);
+            AutoDto tempAutoDtoTwo = Target.GetAutoById(1);
+            tempAutoDto.Marke = "Mini";
+            Target.UpdateAuto(tempAutoDto);
+            tempAutoDtoTwo.Marke = "Ferrari";
+            Target.UpdateAuto(tempAutoDtoTwo);
+            Assert.Inconclusive("Test not implemented.");
             Assert.Inconclusive("Test not implemented.");
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateKundeWithOptimisticConcurrencyTest()
         {
             Assert.Inconclusive("Test not implemented.");
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateReservationWithOptimisticConcurrencyTest()
         {
             Assert.Inconclusive("Test not implemented.");
