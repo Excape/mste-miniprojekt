@@ -32,66 +32,66 @@ namespace AutoReservation.BusinessLayer.Testing
         public void CRUDAutoTest()
         {
             // Create
-            Assert.IsNull(Target.loadAuto(4));
+            Assert.IsNull(Target.LoadAuto(4));
             var auto = new LuxusklasseAuto { Marke = "VW", Tagestarif = 150, Basistarif = 100 };
-            Target.insertAuto(auto);
+            Target.InsertAuto(auto);
             var timestamp = auto.RowVersion;
             Assert.AreEqual(4, auto.Id);
 
             // Read
-            Assert.IsNotNull(Target.loadAuto(4));
+            Assert.IsNotNull(Target.LoadAuto(4));
             
             // Update
             auto.Basistarif = 4993;
-            Target.updateAuto(auto);
+            Target.UpdateAuto(auto);
             Assert.AreNotEqual(timestamp, auto.RowVersion);
 
             // Delete
-            Target.deleteAuto(auto);
-            Assert.IsNull(Target.loadAuto(4));
+            Target.DeleteAuto(auto);
+            Assert.IsNull(Target.LoadAuto(4));
 
         }
 
         [TestMethod]
         public void UpdateAutoTest()
         {
-            var auto1 = Target.loadAuto(1);
-            var auto2 = Target.loadAuto(1);
+            var auto1 = Target.LoadAuto(1);
+            var auto2 = Target.LoadAuto(1);
             Assert.AreNotEqual(auto1, auto2);
 
             auto1.Marke = "A";
             auto2.Marke = "B";
 
-            Target.updateAuto(auto1);
+            Target.UpdateAuto(auto1);
 
             try
             {
-                Target.updateAuto(auto2);
+                Target.UpdateAuto(auto2);
                 Assert.Fail("Was able to override!");
             }catch(LocalOptimisticConcurrencyException<Auto>)
             {
                 // Everything OK
             }
 
-            Assert.AreEqual("A", Target.loadAuto(1).Marke);
+            Assert.AreEqual("A", Target.LoadAuto(1).Marke);
         }
 
 
         [TestMethod]
         public void UpdateKundeTest()
         {
-            var kunde1 = Target.loadKunde(1);
-            var kunde2 = Target.loadKunde(1);
+            var kunde1 = Target.LoadKunde(1);
+            var kunde2 = Target.LoadKunde(1);
             Assert.AreNotEqual(kunde1, kunde2);
 
             kunde1.Nachname = "A";
             kunde2.Nachname = "B";
 
-            Target.updateKunde(kunde1);
+            Target.UpdateKunde(kunde1);
 
             try
             {
-                Target.updateKunde(kunde2);
+                Target.UpdateKunde(kunde2);
                 Assert.Fail("Was able to override!");
             }
             catch (LocalOptimisticConcurrencyException<Kunde>)
@@ -99,37 +99,72 @@ namespace AutoReservation.BusinessLayer.Testing
                 // Everything OK
             }
 
-            Assert.AreEqual("A", Target.loadKunde(1).Nachname);
+            Assert.AreEqual("A", Target.LoadKunde(1).Nachname);
         }
 
         [TestMethod]
         public void UpdateReservationTest()
         {
-            var res1 = Target.loadReservation(1);
-            var res2 = Target.loadReservation(1);
+            var res1 = Target.LoadReservation(1);
+            var res2 = Target.LoadReservation(1);
             Assert.AreNotEqual(res1, res2);
 
             // TODO: Ask, why both must be updated!?
-            res1.Kunde = Target.loadKunde(2);
+            res1.Kunde = Target.LoadKunde(2);
             res1.KundeId = 2;
-            res2.Kunde = Target.loadKunde(3);
+            res2.Kunde = Target.LoadKunde(3);
             res2.KundeId = 3;
 
-            Target.updateReservation(res1);
+            Target.UpdateReservation(res1);
 
             try
             {
-                Target.updateReservation(res2);
+                Target.UpdateReservation(res2);
                 Assert.Fail("Was able to override!");
             }
             catch (LocalOptimisticConcurrencyException<Reservation>)
             {
                 // Everything OK
             }
-
-            Assert.AreEqual(2, Target.loadReservation(1).Kunde.Id);
+            Assert.AreEqual(2, Target.LoadReservation(1).Kunde.Id);
         }
 
+        [TestMethod]
+        public void LoadReservationsTest()
+        {
+            var resList = Target.LoadAllReservations();
+            Assert.IsNotNull(resList);
+            Assert.AreEqual(3, resList.Count);
+            foreach (var res in resList)
+            {
+                Assert.IsNotNull(res.Auto);
+                Assert.IsNotNull(res.Kunde);
+            }
+        }
+
+        [TestMethod]
+        public void LoadAutosTest()
+        {
+            var autos = Target.LoadAllAutos();
+            Assert.IsNotNull(autos);
+            Assert.AreEqual(3, autos.Count);
+            foreach (var auto in autos)
+            {
+                Assert.IsNotNull(auto.Reservationen);
+            }
+        }
+
+        [TestMethod]
+        public void LoadKundenTest()
+        {
+            var kunden = Target.LoadAllKunden();
+            Assert.IsNotNull(kunden);
+            Assert.AreEqual(4, kunden.Count);
+            foreach (var kunde in kunden)
+            {
+                Assert.IsNotNull(kunde.Reservationen);
+            }
+        }
     }
 
 }

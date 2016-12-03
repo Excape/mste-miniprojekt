@@ -10,7 +10,7 @@ namespace AutoReservation.BusinessLayer
     public class AutoReservationBusinessComponent
     {
 
-        private void insert<T>(T obj) where T : class
+        private void Insert<T>(T obj) where T : class
         {
             using (var db = new AutoReservationContext())
             {
@@ -19,7 +19,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void update<T>(T obj) where T : class
+        public void Update<T>(T obj) where T : class
         {
             using (var db = new AutoReservationContext())
             {
@@ -35,7 +35,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void delete<T>(T obj) where T : class
+        public void Delete<T>(T obj) where T : class
         {
             using (var db = new AutoReservationContext())
             {
@@ -44,7 +44,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public Auto loadAuto(int index)
+        public Auto LoadAuto(int index)
         {
             using (var db = new AutoReservationContext())
             {
@@ -53,7 +53,7 @@ namespace AutoReservation.BusinessLayer
                     .SingleOrDefault(auto => auto.Id == index);
             }
         }
-        public Kunde loadKunde(int index)
+        public Kunde LoadKunde(int index)
         {
             using (var db = new AutoReservationContext())
             {
@@ -63,7 +63,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public Reservation loadReservation(int index)
+        public Reservation LoadReservation(int index)
         {
             using (var db = new AutoReservationContext())
             {
@@ -74,51 +74,80 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-
-        public void insertAuto(Auto auto)
+        public List<Auto> LoadAllAutos()
         {
-            insert(auto);
+            using (var db = new AutoReservationContext())
+            {
+                return db.Autos
+                    .Include(auto => auto.Reservationen)
+                    .ToList();
+            }
+        }
+        public List<Kunde> LoadAllKunden()
+        {
+            using (var db = new AutoReservationContext())
+            {
+                return db.Kunden
+                    .Include(kunde => kunde.Reservationen)
+                    .ToList();
+            }
+        }
+        public List<Reservation> LoadAllReservations()
+        {
+            using (var db = new AutoReservationContext())
+            {
+                return db.Reservationen
+                    .Include(reservation => reservation.Kunde)
+                    .Include(reservation => reservation.Auto)
+                    .ToList();
+            }
         }
 
-        public void updateAuto(Auto auto)
+
+        public void InsertAuto(Auto auto)
         {
-            update(auto);
+            Insert(auto);
         }
 
-        public void deleteAuto(Auto auto)
+        public void UpdateAuto(Auto auto)
         {
-            delete(auto);
+            Update(auto);
         }
 
-        public void insertKunde(Kunde customer)
+        public void DeleteAuto(Auto auto)
         {
-            insert(customer);
+            Delete(auto);
         }
 
-        public void updateKunde(Kunde customer)
+        public void InsertKunde(Kunde customer)
         {
-            update(customer);
+            Insert(customer);
         }
 
-        public void deleteKunde(Kunde customer)
+        public void UpdateKunde(Kunde customer)
         {
-            delete(customer);
+            Update(customer);
+        }
+
+        public void DeleteKunde(Kunde customer)
+        {
+            Delete(customer);
         }
 
 
-        public void insertReservation(Reservation reservation)
+        public void InsertReservation(Reservation reservation)
         {
-            insert(reservation);
+            Insert(reservation);
         }
 
-        public void updateReservation( Reservation reservation)
+        public void UpdateReservation( Reservation reservation)
         {
-            update(reservation);
+            Update(reservation);
         }
 
-        public void deleteReservation(Reservation reservation)
+        public void DeleteReservation(Reservation reservation)
         {
-            delete(reservation);
+            Delete(reservation);
         }
 
         private static LocalOptimisticConcurrencyException<T> CreateLocalOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
