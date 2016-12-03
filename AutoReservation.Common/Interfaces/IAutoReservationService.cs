@@ -11,6 +11,14 @@ namespace AutoReservation.Common.Interfaces
         List<KundeDto> Kunden { [OperationContract] get; }
         List<ReservationDto> Reservationen { [OperationContract] get; }
 
+        [OperationContract]
+        AutoDto GetAutoById(int id);
+
+        [OperationContract]
+        KundeDto GetKundeById(int id);
+
+        [OperationContract]
+        ReservationDto GetReservationByNr(int reservationsNr);
 
         [OperationContract]
         AutoDto InsertAuto(AutoDto autoDto);

@@ -55,6 +55,21 @@ namespace AutoReservation.Service.Wcf
             autoReservationBusinessComponent.DeleteReservation(reservationDto.ConvertToEntity());
         }
 
+        public AutoDto GetAutoById(int id)
+        {
+            return autoReservationBusinessComponent.LoadAuto(id).ConvertToDto();
+        }
+
+        public KundeDto GetKundeById(int id)
+        {
+            return autoReservationBusinessComponent.LoadKunde(id).ConvertToDto();
+        }
+
+        public ReservationDto GetReservationByNr(int reservationsNr)
+        {
+            return autoReservationBusinessComponent.LoadReservation(reservationsNr).ConvertToDto();
+        }
+
         public AutoDto InsertAuto(AutoDto autoDto)
         {
             Auto auto = autoDto.ConvertToEntity();
