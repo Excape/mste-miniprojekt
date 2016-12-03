@@ -1,4 +1,5 @@
 ﻿using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.FaultExceptions;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -30,12 +31,15 @@ namespace AutoReservation.Common.Interfaces
         ReservationDto InsertReservation(ReservationDto reservationDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFaultContract))]
         AutoDto UpdateAuto(AutoDto autoDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFaultContract))]
         KundeDto UpdateKunde(KundeDto kundeDto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFaultContract))]
         ReservationDto UpdateReservation(ReservationDto reservationDto);
 
         [OperationContract]

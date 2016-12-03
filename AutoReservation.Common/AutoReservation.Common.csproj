@@ -82,6 +82,7 @@
     <Compile Include="DataTransferObjects\Core\IValidatable.cs" />
     <Compile Include="DataTransferObjects\KundeDto.cs" />
     <Compile Include="DataTransferObjects\ReservationDto.cs" />
+    <Compile Include="FaultExceptions\OptimisticConcurrencyFaultContract.cs" />
     <Compile Include="Interfaces\IAutoReservationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

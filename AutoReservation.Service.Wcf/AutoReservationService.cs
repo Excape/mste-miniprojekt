@@ -3,8 +3,10 @@ using AutoReservation.Common.Interfaces;
 using System;
 using System.Diagnostics;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.FaultExceptions;
 using System.Collections.Generic;
 using AutoReservation.Dal.Entities;
+using System.ServiceModel;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -93,23 +95,55 @@ namespace AutoReservation.Service.Wcf
 
         public AutoDto UpdateAuto(AutoDto autoDto)
         {
-            Auto auto = autoDto.ConvertToEntity();
-            autoReservationBusinessComponent.UpdateAuto(auto);
-            return auto.ConvertToDto();
+            try
+            {
+                Auto auto = autoDto.ConvertToEntity();
+                autoReservationBusinessComponent.UpdateAuto(auto);
+                return auto.ConvertToDto();
+            } catch (LocalOptimisticConcurrencyException<Auto> ex)
+            {
+                OptimisticConcurrencyFaultContract ocfc = new OptimisticConcurrencyFaultContract
+                {
+                    Operation = "UpdateAuto",
+                    Message = ex.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(ocfc);
+            }
         }
 
         public KundeDto UpdateKunde(KundeDto kundeDto)
         {
-            Kunde kunde = kundeDto.ConvertToEntity();
-            autoReservationBusinessComponent.UpdateKunde(kunde);
-            return kunde.ConvertToDto();
-        }
+            try { 
+                Kunde kunde = kundeDto.ConvertToEntity();
+                autoReservationBusinessComponent.UpdateKunde(kunde);
+                return kunde.ConvertToDto();
+            } catch (LocalOptimisticConcurrencyException<Auto> ex)
+            {
+                OptimisticConcurrencyFaultContract ocfc = new OptimisticConcurrencyFaultContract
+                {
+                    Operation = "UpdateKunde",
+                    Message = ex.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(ocfc);
+            }
+}
 
         public ReservationDto UpdateReservation(ReservationDto reservationDto)
         {
-            Reservation reservation = reservationDto.ConvertToEntity();
-            autoReservationBusinessComponent.UpdateReservation(reservation);
-            return reservation.ConvertToDto();
+            try
+            {
+                Reservation reservation = reservationDto.ConvertToEntity();
+                autoReservationBusinessComponent.UpdateReservation(reservation);
+                return reservation.ConvertToDto();
+            } catch (LocalOptimisticConcurrencyException<Auto> ex)
+            {
+                OptimisticConcurrencyFaultContract ocfc = new OptimisticConcurrencyFaultContract
+                {
+                    Operation = "UpdateReservation",
+                    Message = ex.Message
+                };
+                throw new FaultException<OptimisticConcurrencyFaultContract>(ocfc);
+            }
         }
     }
 }
