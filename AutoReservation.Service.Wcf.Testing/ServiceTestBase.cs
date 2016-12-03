@@ -197,22 +197,33 @@ namespace AutoReservation.Service.Wcf.Testing
             Target.UpdateAuto(tempAutoDto);
             tempAutoDtoTwo.Marke = "Ferrari";
             Target.UpdateAuto(tempAutoDtoTwo);
-            Assert.Inconclusive("Test not implemented.");
-            Assert.Inconclusive("Test not implemented.");
+            Assert.Fail();
         }
 
         [TestMethod]
         [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateKundeWithOptimisticConcurrencyTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            KundeDto tempKundeDto = Target.GetKundeById(1);
+            KundeDto tempKundeDtoTwo = Target.GetKundeById(1);
+            tempKundeDto.Nachname = "Muster";
+            Target.UpdateKunde(tempKundeDto);
+            tempKundeDtoTwo.Nachname = "Meier";
+            Target.UpdateKunde(tempKundeDtoTwo);
+            Assert.Fail();
         }
 
         [TestMethod]
         [ExpectedException(typeof(FaultException<OptimisticConcurrencyFaultContract>))]
         public void UpdateReservationWithOptimisticConcurrencyTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            ReservationDto tempReservationDto = Target.GetReservationByNr(1);
+            ReservationDto tempReservationDtoTwo = Target.GetReservationByNr(1);
+            tempReservationDto.Auto = Target.GetAutoById(2);
+            Target.UpdateReservation(tempReservationDto);
+            tempReservationDtoTwo.Auto = Target.GetAutoById(3);
+            Target.UpdateReservation(tempReservationDtoTwo);
+            Assert.Fail();
         }
 
         #endregion

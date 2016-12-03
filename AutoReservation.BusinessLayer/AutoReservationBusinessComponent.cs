@@ -157,7 +157,7 @@ namespace AutoReservation.BusinessLayer
                 .GetDatabaseValues()
                 .ToObject();
 
-            return new LocalOptimisticConcurrencyException<T>($"Update {typeof(Auto).Name}: Concurrency-Fehler", dbEntity);
+            return new LocalOptimisticConcurrencyException<T>($"Update {typeof(T).Name}: Concurrency-Fehler", dbEntity);
         }
     }
 }

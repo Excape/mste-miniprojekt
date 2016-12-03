@@ -117,7 +117,7 @@ namespace AutoReservation.Service.Wcf
                 Kunde kunde = kundeDto.ConvertToEntity();
                 autoReservationBusinessComponent.UpdateKunde(kunde);
                 return kunde.ConvertToDto();
-            } catch (LocalOptimisticConcurrencyException<Auto> ex)
+            } catch (LocalOptimisticConcurrencyException<Kunde> ex)
             {
                 OptimisticConcurrencyFaultContract ocfc = new OptimisticConcurrencyFaultContract
                 {
@@ -135,7 +135,7 @@ namespace AutoReservation.Service.Wcf
                 Reservation reservation = reservationDto.ConvertToEntity();
                 autoReservationBusinessComponent.UpdateReservation(reservation);
                 return reservation.ConvertToDto();
-            } catch (LocalOptimisticConcurrencyException<Auto> ex)
+            } catch (LocalOptimisticConcurrencyException<Reservation> ex)
             {
                 OptimisticConcurrencyFaultContract ocfc = new OptimisticConcurrencyFaultContract
                 {
