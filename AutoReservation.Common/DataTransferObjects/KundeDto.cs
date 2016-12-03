@@ -1,14 +1,20 @@
 ﻿using AutoReservation.Common.DataTransferObjects.Core;
 using System;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace AutoReservation.Common.DataTransferObjects
 {
+    [DataContract]
     public class KundeDto : DtoBase<KundeDto>
     {
+        [DataMember]
         public int Id { get; set; }
+        [DataMember]
         public string Vorname { get; set; }
+        [DataMember]
         public string Nachname { get; set; }
+        [DataMember]
         public DateTime Geburtsdatum { get; set; }
 
         public override string Validate()
