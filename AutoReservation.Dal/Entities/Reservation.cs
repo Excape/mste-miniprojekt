@@ -20,7 +20,10 @@ namespace AutoReservation.Dal.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
+        [ForeignKey(nameof(AutoId))]
         public virtual Auto Auto { get; set; }
+
+        [ForeignKey(nameof(KundeId))]
         public virtual Kunde Kunde { get; set; }
     }
 }

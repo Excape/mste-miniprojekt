@@ -27,6 +27,9 @@ namespace AutoReservation.BusinessLayer
                 {
                     db.Entry(obj).State = EntityState.Modified;
                     db.SaveChanges();
+                    // Wie "eager" loading?
+                    // Warum passiert das automatisch beim insert?
+                    db.Entry(obj).Reload();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -140,9 +143,10 @@ namespace AutoReservation.BusinessLayer
             Insert(reservation);
         }
 
-        public void UpdateReservation( Reservation reservation)
+        public Reservation UpdateReservation( Reservation reservation)
         {
             Update(reservation);
+            return LoadReservation(reservation.ReservationsNr);
         }
 
         public void DeleteReservation(Reservation reservation)

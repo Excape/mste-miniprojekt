@@ -133,8 +133,7 @@ namespace AutoReservation.Service.Wcf
             try
             {
                 Reservation reservation = reservationDto.ConvertToEntity();
-                autoReservationBusinessComponent.UpdateReservation(reservation);
-                return reservation.ConvertToDto();
+                return autoReservationBusinessComponent.UpdateReservation(reservation).ConvertToDto();
             } catch (LocalOptimisticConcurrencyException<Reservation> ex)
             {
                 OptimisticConcurrencyFaultContract ocfc = new OptimisticConcurrencyFaultContract

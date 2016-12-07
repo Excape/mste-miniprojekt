@@ -176,11 +176,10 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void UpdateReservationTest()
         {
-            //ReservationDto tempReservationDto = Target.GetReservationByNr(1);
-            //AutoDto tempAutoDto = Target.GetAutoById(3);
-            //tempReservationDto.Auto = tempAutoDto;
-            //Assert.AreEqual(3, Target.UpdateReservation(tempReservationDto).Auto.Id);
-            Assert.Inconclusive("Test not implemented.");
+            ReservationDto tempReservationDto = Target.GetReservationByNr(1);
+            AutoDto tempAutoDto = Target.GetAutoById(3);
+            tempReservationDto.Auto = tempAutoDto;
+            Assert.AreEqual(3, Target.UpdateReservation(tempReservationDto).Auto.Id);
         }
 
         #endregion

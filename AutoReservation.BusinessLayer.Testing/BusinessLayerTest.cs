@@ -109,7 +109,6 @@ namespace AutoReservation.BusinessLayer.Testing
             var res2 = Target.LoadReservation(1);
             Assert.AreNotEqual(res1, res2);
 
-            // TODO: Ask, why both must be updated!?
             res1.Kunde = Target.LoadKunde(2);
             res1.KundeId = 2;
             res2.Kunde = Target.LoadKunde(3);
