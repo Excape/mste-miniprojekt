@@ -27,8 +27,6 @@ namespace AutoReservation.BusinessLayer
                 {
                     db.Entry(obj).State = EntityState.Modified;
                     db.SaveChanges();
-                    // Wie "eager" loading?
-                    // Warum passiert das automatisch beim insert?
                     db.Entry(obj).Reload();
                 }
                 catch (DbUpdateConcurrencyException)
